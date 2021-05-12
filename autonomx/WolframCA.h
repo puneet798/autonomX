@@ -16,16 +16,19 @@ class WolframCA : public Generator
 private:
 
     // Debugging
-    bool        flagDebug               = true;
+    bool  flagDebug = true;
 
     // cells of lattice
     std::vector<double> cells;
 
+    // Binary conversion of decimal user input in future starting by rule 90
+    int ruleset[8];// = {0,1,0,1,1,0,1,0};// {1,1,0,1,1,1,1,0};
+
     // cell values
     double* cellValues;
 
-    // properties and rules
-    int rule;
+    // properties and rules; default rule set to 90
+    int rule = 100;
 
     // timeScale variable
     double      timeScale = 30.0 / 1000.0;
@@ -50,6 +53,8 @@ public:
     double getLatticeValue(int x, int y) override;
     void writeLatticeValue(int x, int y, double value) override;
     double sigmoid(double value);
+    void generate();
+    int findCellValue(int left,int middle, int right);
 
     // accessors / mutators
     int getRule();
