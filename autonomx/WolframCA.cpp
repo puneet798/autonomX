@@ -49,8 +49,8 @@ void WolframCA::initialize(){
     iterationNumber = 1;
 
     //generate the rule set array based on the defined rule
-    generate();
-
+    int r = getRule();
+    generate(r);
 }
 
 void WolframCA::resetParameters()
@@ -72,11 +72,13 @@ void WolframCA::computeIteration(double deltaTime)
 
     ///// line by line generation implementation /////
 
-    // every iteration, iterationNumber increments
-    iterationNumber++;
+    //set ruleset using the determined rule after checking if the rule has changed by the user
+    int r = getRule();
+    if (iterationNumber>1 && (prev_rule!=rule))
+    generate(r);
 
     // every 1000 iterations, currentGeneration increments and iterationNumber resets
-    if(iterationNumber % 50 == 0) {
+    if(iterationNumber % 100 == 0) {
         currentGeneration++;
         iterationNumber = 0;
     }
@@ -114,6 +116,12 @@ void WolframCA::computeIteration(double deltaTime)
     for(int i = 0; i < latticeWidth; ++i) {
         cells[currentGeneration * latticeWidth + i] =  i*0.5; //currentGeneration / (double)latticeHeight;
     }*/
+
+    //store the rule to check next time if the rule has changed
+    prev_rule = rule;
+
+    // every iteration, iterationNumber increments
+    iterationNumber++;
 }
 
 int WolframCA::findCellValue(int a, int b, int c) {
@@ -143,8 +151,7 @@ int WolframCA::findCellValue(int a, int b, int c) {
     //}
 }
 
-void WolframCA::generate(){
-    int r = getRule();
+void WolframCA::generate(int r){
 
     //Grabs the binary value from the int and inserts into array
        for (int i = sizeof(r) * CHAR_BIT; i--; )
@@ -157,7 +164,7 @@ void WolframCA::generate(){
        }
        //to check the update rulesets
        //for (int j=0;j<8;j++)
-       //qDebug() << "The value of ruleset is is  "<< ruleset[j];
+       //qDebug() << "The value of new ruleset is is  "<< ruleset[j];
 }
 
 double WolframCA::getLatticeValue(int x, int y)
@@ -176,6 +183,7 @@ void WolframCA::writeLatticeValue(int x, int y, double value)
 }
 
 int WolframCA::getRule() {
+    //qDebug() <<"New Rule is"<< rule;
     return rule;
 }
 

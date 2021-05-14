@@ -28,13 +28,16 @@ private:
     double* cellValues;
 
     // properties and rules; default rule set to 90
-    int rule = 100;
+    int rule = 90;
 
     // timeScale variable
     double      timeScale = 30.0 / 1000.0;
 
     // global iteration counter
     int iterationNumber;
+
+    //to store the previous rule
+    int prev_rule;
 
     // WolframCA specific variables
     int currentGeneration = 1;
@@ -53,7 +56,7 @@ public:
     double getLatticeValue(int x, int y) override;
     void writeLatticeValue(int x, int y, double value) override;
     double sigmoid(double value);
-    void generate();
+    void generate(int r);
     int findCellValue(int left,int middle, int right);
 
     // accessors / mutators
