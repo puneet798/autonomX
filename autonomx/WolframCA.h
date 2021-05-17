@@ -3,7 +3,7 @@
 
 #pragma once
 #include <vector>
-
+#include<random>
 #include "Generator.h"
 
 
@@ -29,6 +29,9 @@ private:
 
     // properties and rules; default rule set to 90
     int rule = 90;
+
+    //random generator to initialize cells
+    std::mt19937 randomGenerator;
 
     // timeScale variable
     double      timeScale = 30.0 / 1000.0;

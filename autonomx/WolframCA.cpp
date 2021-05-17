@@ -74,11 +74,11 @@ void WolframCA::computeIteration(double deltaTime)
 
     //set ruleset using the determined rule after checking if the rule has changed by the user
     int r = getRule();
-    if (iterationNumber>1 && (prev_rule!=rule))
+    if (iterationNumber>=1 && (prev_rule!=rule))
     generate(r);
 
     // every 1000 iterations, currentGeneration increments and iterationNumber resets
-    if(iterationNumber % 100 == 0) {
+    if(iterationNumber % 50 == 0) {
         currentGeneration++;
         iterationNumber = 0;
     }
